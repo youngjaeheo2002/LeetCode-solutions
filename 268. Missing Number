@@ -1,0 +1,11 @@
+class Solution:
+    def missingNumber(self, nums: List[int]) -> int:
+        original_set = set(range(len(nums)+1))
+
+        for i in range(len(nums)):
+            original_set.remove(nums[i])
+
+
+        return list(original_set)[0]
+        
+            
