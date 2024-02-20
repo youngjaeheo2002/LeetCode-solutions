@@ -1,0 +1,24 @@
+https://leetcode.com/problems/coin-change/submissions/1181381586/
+
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        if amount == 0:
+            return 0
+
+        inf = amount//min(coins) + 1
+        m = [0]*(amount + 1)
+
+        for i in range(1,amount+1):
+            min_count = inf
+
+            for coin in coins:
+                currentIndex = i - coin
+                if currentIndex >= 0 and m[currentIndex] != -1:
+                    min_count = min(min_count,m[currentIndex])
+            if min_count == inf:
+                m[i] = -1
+            else:
+                m[i] = 1 + min_count
+        return m[-1]
+            
+                    
