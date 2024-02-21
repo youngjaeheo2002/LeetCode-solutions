@@ -1,0 +1,28 @@
+https://leetcode.com/problems/merge-triplets-to-form-target-triplet/submissions/1182216387/
+
+class Solution:
+    def mergeTriplets(self, triplets: List[List[int]], target: List[int]) -> bool:
+        def filter(triplets, target):
+            returnVal = []
+            for triplet in triplets:
+                if not ((triplet[0] > target[0])\
+                or (triplet[1] > target[1])\
+                or (triplet[2] > target[2])):
+                    returnVal.append(triplet)
+
+            return returnVal
+
+        target_0 = False
+        target_1 = False
+        target_2 = False
+        filtered = filter(triplets,target)
+        for triple in filtered:
+            if triple[0] == target[0]:
+                target_0 = True
+            if triple[1] == target[1]:
+                target_1 = True
+
+            if triple[2] == target[2]:
+                target_2 = True
+
+        return target_0 and target_1 and target_2
