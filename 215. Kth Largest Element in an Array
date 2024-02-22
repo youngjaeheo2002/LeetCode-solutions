@@ -1,0 +1,10 @@
+https://leetcode.com/problems/kth-largest-element-in-an-array/submissions/1183337089/
+
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+
+        import heapq
+
+        heapq.heapify(nums)
+        n_largest =  heapq.nlargest(k,nums)
+        return n_largest[k-1]
