@@ -1,0 +1,78 @@
+https://leetcode.com/problems/design-twitter/submissions/1184324845/
+
+class User:
+
+    def __init__(self,userId):
+        self.userId = userId
+        self.tweets = []
+        self.following = []
+
+    def follow(self,followee):
+        #add followee to your own follower's list
+        if not followee in self.following:
+            self.following.append(followee)
+
+    def unfollow(self,followee):
+        if followee in self.following:
+            self.following.remove(followee)
+
+
+    def post(self,tweetId,tweetCount):
+        self.tweets.append([tweetId,tweetCount])
+        return tweetId 
+
+        
+class Twitter:
+    users = {
+
+    }
+    tweetCount = 0
+    def __init__(self):
+        self.users = {}
+
+    def createOrGetUser(self,userId):
+        if userId not in self.users:
+            self.users[userId] = (User(userId))
+        return self.users[userId]
+
+    def postTweet(self, userId: int, tweetId: int) -> None:
+        user = self.createOrGetUser(userId)
+        user.post(tweetId,self.tweetCount)
+        self.tweetCount += 1
+
+        print(f"postTweet user.tweets = {user.tweets}")
+
+    def getNewsFeed(self, userId: int) -> List[int]:
+        user = self.createOrGetUser(userId)
+        following = user.following
+        newsfeed = user.tweets.copy()
+        for user in following:
+
+            newsfeed += user.tweets.copy()
+        newsfeed = sorted(newsfeed, key = lambda x:x[1], reverse = True)
+        newsfeed = newsfeed[0:min(10,len(newsfeed))]
+        print(f"getNewsFeed new tweets list = {user.tweets}")
+        newsfeed = list(map(lambda x: x[0],newsfeed))
+        return newsfeed
+
+
+    def follow(self, followerId: int, followeeId: int) -> None:
+        follower = self.createOrGetUser(followerId)
+        followee = self.createOrGetUser(followeeId)
+        follower.follow(followee)
+        print(f"follow new tweets list = {follower.tweets}")
+
+    def unfollow(self, followerId: int, followeeId: int) -> None:
+        follower = self.createOrGetUser(followerId)
+        followee = self.createOrGetUser(followeeId)
+        follower.unfollow(followee)
+        print(f"unfollow new tweets list = {follower.tweets}")
+
+
+
+# Your Twitter object will be instantiated and called as such:
+# obj = Twitter()
+# obj.postTweet(userId,tweetId)
+# param_2 = obj.getNewsFeed(userId)
+# obj.follow(followerId,followeeId)
+# obj.unfollow(followerId,followeeId)
