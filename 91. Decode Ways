@@ -1,0 +1,29 @@
+https://leetcode.com/problems/decode-ways/submissions/1186185966/
+
+class Solution:
+    def numDecodings(self, s: str) -> int:
+        if s == '0':
+            return 0
+        import numpy as np
+        m = np.zeros(len(s)+1)
+
+        m[-1] = 1
+        m[-2] = 1
+
+        for i in range(len(s)-1,-1,-1):
+
+            if s[i] == '0':
+                m[i] = 0
+                continue
+            m[i] = m[i+1]
+
+            if i + 2 <= len(s):
+
+                if int(s[i:i+2]) <= 26:
+                    m[i] += m[i+2]
+        print(m)
+        return int(m[0])
+
+        
+
+
