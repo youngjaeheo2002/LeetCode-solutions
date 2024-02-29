@@ -1,0 +1,29 @@
+https://leetcode.com/problems/merge-intervals/submissions/1190050848/
+
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        import numpy as np
+        arr = np.array(intervals)
+        sorted_indices = np.argsort(arr[:, 0])
+        returnVal = []
+        # Sort the array based on the sorted indices
+        sorted_arr = arr[sorted_indices]
+
+        start = int(sorted_arr[0][0])
+        end = int(sorted_arr[0][1])
+
+        for i in range(1,len(sorted_arr)):
+
+            current_start = sorted_arr[i][0]
+            current_end = sorted_arr[i][1]
+
+            if current_start <= end and current_start >= start:
+                end = max(end,current_end)
+
+            else:
+                returnVal.append([start,end])
+                start = int(current_start)
+                end = int(current_end)
+                
+        returnVal.append([start,end])
+        return returnVal
