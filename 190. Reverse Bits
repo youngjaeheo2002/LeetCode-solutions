@@ -1,0 +1,14 @@
+https://leetcode.com/problems/reverse-bits/submissions/1191178718/
+
+
+class Solution:
+    def reverseBits(self, n: int) -> int:
+        returnVal = 0
+        for i in range(32):
+            remainder = n%2
+            n = n//2
+
+            returnVal += remainder * 2**(31-i)
+        return returnVal
+
+
