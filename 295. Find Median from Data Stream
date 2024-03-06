@@ -1,0 +1,47 @@
+https://leetcode.com/problems/find-median-from-data-stream/submissions/1195250585/
+
+class MedianFinder:
+
+    def __init__(self):
+        self.smallheap = []
+        self.largeheap = []
+
+
+    def addNum(self, num: int) -> None:
+
+        if self.largeheap == [] or num < self.largeheap[0]:
+            heappush(self.smallheap,-1 * num)
+        else:
+            heappush(self.largeheap,num)
+
+
+        if len(self.smallheap) == len(self.largeheap) + 2:
+            heappush(self.largeheap,-1*self.smallheap[0])
+            heappop(self.smallheap)
+
+        if len(self.largeheap) == len(self.smallheap) + 2:
+            heappush(self.smallheap,-1 * self.largeheap[0])
+            heappop(self.largeheap)
+
+        
+
+        
+
+    def findMedian(self) -> float:
+
+        if len(self.smallheap) == len(self.largeheap) + 1:
+            print(-1 * self.smallheap[0])
+            return -1 * self.smallheap[0]
+
+        if len(self.largeheap) == len(self.smallheap) + 1:
+            print(self.largeheap[0])
+            return self.largeheap[0]
+
+        else:
+            return ((-1 * self.smallheap[0]) + self.largeheap[0])/2
+
+
+# Your MedianFinder object will be instantiated and called as such:
+# obj = MedianFinder()
+# obj.addNum(num)
+# param_2 = obj.findMedian()
