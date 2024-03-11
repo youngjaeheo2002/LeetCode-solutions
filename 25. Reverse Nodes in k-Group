@@ -1,0 +1,60 @@
+https://leetcode.com/problems/reverse-nodes-in-k-group/submissions/1200688044/
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        def getLength(head):
+            length = 0
+            current = head
+            while(current!=None):
+                length += 1
+                current = current.next
+
+            return length
+
+        remaining_length = getLength(head)
+        def reverse(start,k,after):
+            if k == 1:
+                return start
+            current = start
+            first = current.next
+            next = current.next
+
+            iters= k-1
+
+            while(iters > 0):
+                print(current)
+                tmp = next.next
+                next.next = current
+                current = next
+                next = tmp
+                iters -=1
+
+            start.next = after
+            return (current)
+
+
+
+    
+        head_of_res  = ListNode()
+        moving_prev = head_of_res
+        current = head
+        after = head
+
+        while(remaining_length >=k):
+            
+            for i in range(k):
+                after = after.next
+            current = reverse(current,k,after)
+            moving_prev.next = current
+            for i in range(k):
+                current = current.next
+                moving_prev = moving_prev.next
+            remaining_length -=k
+
+        return head_of_res.next
+
