@@ -1,0 +1,43 @@
+https://leetcode.com/problems/network-delay-time/description/
+
+class Solution:
+    def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
+        q = []
+
+        heappush(q,(0,k))
+
+        used = set()
+        dists = {
+
+        }
+        dists[k] = 0
+
+        adj = {
+            src:[] for src,dst,time in times
+        }
+
+        for src,dst,time in times:
+            adj[src].append((dst,time)) 
+
+        while(q):
+            current = heappop(q)
+            if current[1] in adj:
+                for dst,time in adj[current[1]]:
+                    if (dst,time) not in used:
+                        used.add((dst,time))
+                        heappush(q,(dists[current[1]] + time,dst))
+                        if not dst in dists:
+                            dists[dst] = dists[current[1]] + time
+
+                        else:
+                            dists[dst] = min(dists[dst],dists[current[1]] + time)
+
+            
+        if len(dists.keys())!=n:
+            return -1
+
+        return max(dists.values())
+
+        
+        
+
