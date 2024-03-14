@@ -1,0 +1,29 @@
+https://leetcode.com/problems/edit-distance/submissions/1203806747/
+
+class Solution:
+    def minDistance(self, word1: str, word2: str) -> int:
+        import numpy as np
+
+        m = np.zeros((len(word2)+1,len(word1)+1))
+
+        for i in range(len(word2)):
+            m[i][-1] = len(word2) - i
+
+        for i in range(len(word1)):
+            m[-1][i] = len(word1) - i
+
+        print(m)
+
+        for i in range(len(word2)-1,-1,-1):
+            for j in range(len(word1)-1,-1,-1):
+                if (word2[i]) == word1[j]:
+                    m[i][j] = 0 + m[i+1][j+1]
+
+                else:
+                    combinations = [1 + m[i+1][j+1],\
+                    1 + m[i][j+1], 1 + m[i+1][j],\
+                    ]
+
+                    m[i][j] = min(combinations)
+
+        return int(m[0][0])
