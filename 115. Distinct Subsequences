@@ -1,0 +1,18 @@
+class Solution:
+    def numDistinct(self, s: str, t: str) -> int:
+        import numpy as np
+
+        m = np.zeros((len(s)+1,len(t)+1))
+
+        for i in range(len(s)+1):
+            m[i][-1] = 1
+
+        for i in range(len(s)-1,-1,-1):
+            for j in range(len(t)-1,-1,-1):
+                m[i][j] = m[i+1][j]
+
+                if s[i] == t[j]:
+                    m[i][j] += m[i+1][j+1]
+
+        return int(m[0][0])
+
