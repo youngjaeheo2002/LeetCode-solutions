@@ -1,0 +1,29 @@
+https://leetcode.com/problems/subsets/submissions/1211359791/
+
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        
+        
+        def helper(nums):
+            if len(nums) == 1:
+                return [nums]
+            res = [nums]
+            
+            for i in range(len(nums)):
+                tmp = nums[i]
+                nums.pop(i)
+                res = helper(nums.copy()) + res
+
+                nums.insert(i,tmp)
+
+            return res
+
+        res = [[]] + helper(nums)
+        unique_lists = [list(t) for t in set(tuple(x) for x in res)]
+        return unique_lists
+
+
+
+
+
+        
