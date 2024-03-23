@@ -1,0 +1,11 @@
+https://leetcode.com/problems/managers-with-at-least-5-direct-reports/submissions/1211371956/?envType=study-plan-v2&envId=top-sql-50
+
+# Write your MySQL query statement below
+SELECT name FROM Employee 
+WHERE id IN
+(
+    SELECT DISTINCT managerId FROM Employee 
+    
+    GROUP BY( managerId)
+    HAVING COUNT(managerId)>=5
+)
