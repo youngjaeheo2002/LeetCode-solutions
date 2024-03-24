@@ -1,0 +1,22 @@
+https://leetcode.com/problems/last-stone-weight/submissions/1212107415/
+
+class Solution:
+    def lastStoneWeight(self, stones: List[int]) -> int:
+        import numpy as np
+        heap = []
+        for i in range(len(stones)):
+            heap.append(-1 * stones[i])
+
+        heapify(heap)
+
+        while(len(heap)>=2):
+            first = heappop(heap)
+            second = heappop(heap)
+
+            heappush(heap,first - second)
+
+        if len(heap) == 1:
+            return -1 *heap[0]
+        else:
+            return 0
+        
