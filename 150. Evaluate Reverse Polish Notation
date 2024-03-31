@@ -1,0 +1,45 @@
+class Solution:
+    def evalRPN(self, tokens: List[str]) -> int:
+        from collections import deque 
+        stack = deque()
+        for token in tokens:
+            if token == '+':
+                first = stack.pop()
+                second = stack.pop()
+
+                stack.append(str(int(first) + int(second)))
+
+            elif token == '-':
+                first = stack.pop()
+                second = stack.pop()
+                stack.append(str(int(second) - int(first)))
+
+            elif token == '*':
+                first = stack.pop()
+                second = stack.pop()
+                stack.append(str(int(first) * int(second)))
+
+            elif token == '/':
+                first = int(stack.pop())
+                second = int(stack.pop())
+                product = None
+                if first < 0 and second >=0:
+                    product = -1 * ((second)//(-1 * first))
+                elif first >= 0 and second < 0:
+                    product = -1 * ((-1 * second)//first)
+
+                elif first >= 0 and second >= 0:
+                    product = second//first
+
+                else:
+                    product = second//first
+                stack.append(str(product))
+
+            else:
+                stack.append(token)
+
+
+        return int(stack.pop())
+            
+
+            
