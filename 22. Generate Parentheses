@@ -1,0 +1,27 @@
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        #each level 
+        res = []
+        def helper(starts,ends,before):
+            if before == '':
+                helper(starts-1,ends,'(')
+                return
+
+            if starts == 0:
+                comb = before + ")"*ends
+                res.append(comb)
+                return
+
+            if starts == ends:
+                helper(starts-1,ends,before + "(")
+                return
+
+            helper(starts,ends-1,before + ')')
+            helper(starts-1,ends,before + '(')
+            
+
+        helper(n,n,'')
+        return res
+            
+
+
