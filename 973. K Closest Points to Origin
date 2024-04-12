@@ -1,0 +1,21 @@
+class Solution:
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        heap = []
+
+        distances = []
+        def distance_squared(x,y):
+            return (x-0)**2 + (y-0)**2
+
+        for x,y in points:
+            heappush(distances,(distance_squared(x,y),x,y))
+
+        k_closest = nsmallest(k,distances)
+
+        res = []
+
+        for distance,x,y in k_closest:
+            res.append([x,y])
+        return res
+
+
+        
