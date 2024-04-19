@@ -1,0 +1,33 @@
+class Solution:
+    def leastInterval(self, tasks: List[str], n: int) -> int:
+        counts = Counter(tasks)
+        maxHeap = [-count for count in counts.values()]
+        heapq.heapify(maxHeap)
+        time = 0
+        q = deque()
+
+        while(maxHeap or q):
+            time +=1
+
+            if maxHeap:
+                cnt = heapq.heappop(maxHeap) + 1
+
+                if cnt < 0:
+                    q.append((cnt,time+n))
+            else:
+                time = q[0][1]
+            if q:
+                if time == q[0][1]:
+                    heapq.heappush(maxHeap,q.popleft()[0])
+
+
+
+        return time
+
+###
+The Idea:
+
+basically, this is a greedy algorithm. You first sort the letters by how often they appear. You heapify the list of occurences. 
+Then you start a q. You only watn the tasks in the maxHeap when it is eligible for it to be run. So, you pop the max from the heap,
+which is the highest priority task, and add to teh queue the next time that it could be run. When it comes time that the task is eligible, 
+you pop it from the queue and add it back to the heap. YOu do this all while counting the time and then return the time at the end.
