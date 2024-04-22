@@ -1,0 +1,22 @@
+class Solution:
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        if sum(cost) > sum(gas):
+            return -1
+        start =0
+        total = 0
+        for i in range(len(gas)):
+            total += gas[i] - cost[i]
+
+            if total < 0:
+                total = 0
+                start = i + 1
+
+        return start
+
+the idea:
+first check if the sum fo costs is greater than the sum of gas:
+if it is, then there is no possible solutiosn return -1
+
+if there is a sequence such that sum(gas)>=sum(cost), there is guaranteed to be a solution
+so start at 0, for each index, if the net cost added becomes negative, just start at the next idnex
+return teh start after the loop
