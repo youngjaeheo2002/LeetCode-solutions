@@ -1,0 +1,31 @@
+class Solution:
+    def checkValidString(self, s: str) -> bool:
+        leftMin,leftMax = 0,0
+
+        for c in s:
+            if c == '(':
+                leftMin += 1
+                leftMax += 1
+            elif c == ')':
+                leftMin -=1
+                leftMax -=1
+            
+            else:
+                leftMin -=1
+                leftMax +=1
+
+            if leftMax < 0:
+                return False
+
+            if leftMin <0:
+                leftMin =0
+        return leftMin ==0
+
+the idae:
+counting the balance between left and right
+if during iteration, you find leftmax <0 then you know that there are more rights than lefts or a right comes before a left
+which is invalid
+if leftmin < 0, you know that instead of counting * as ) you should either coutn it as space or (
+so reset it to 0
+
+then return leftMin ==0
