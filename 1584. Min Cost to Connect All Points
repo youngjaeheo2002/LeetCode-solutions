@@ -32,4 +32,43 @@ class Solution:
 
         return res
 
+second attempt
+class Solution:
+    def minCostConnectPoints(self, points: List[List[int]]) -> int:
+        N = len(points)
+
+        adj = {
+            i:[0]*N for i in range(len(points))
+        }
+
+        for i in range(len(points)):
+            for j in range(len(points)):
+                adj[i][j] = [abs(points[i][0]-points[j][0]) + abs(points[i][1] - points[j][1]),j]
+        visited = set()
+        dist = 0
+        q = [(0,0)]
+        while(len(visited)<N):
+            distance,dst = heappop(q)
+            if dst in visited:
+                continue
+            visited.add(dst)
+            dist += distance
+            for neighbour_cost, neighbour in adj[dst]:
+                if neighbour not in visited:
+                    heappush(q,(neighbour_cost,neighbour))
+                
+        return dist
+the idea:
+first make an adjacency matrix for all teh nodes with weights
+then the idea is to use prims
+
+starting at the 0th node, add all it's neighbours wtih cost as athe priorirty toa priority queue
+then whiel you haven't visited all teh nodes
+pop from teh priority queue and if you haven't seen the node you popped from, add it to the resulting distance and then add all teh neighbours from the new ndoe
+
+when you have seen all teh nodes
+return the result
+            
+
+
     
