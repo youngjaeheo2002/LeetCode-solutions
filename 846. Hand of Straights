@@ -1,0 +1,40 @@
+class Solution:
+    def isNStraightHand(self, hand: List[int], groupSize: int) -> bool:
+        if len(hand) % groupSize:
+            return False
+
+        count = {}
+        for n in hand:
+            count[n] = 1 + count.get(n, 0)
+
+        minH = list(count.keys())
+        heapq.heapify(minH)
+        while minH:
+            first = minH[0]
+            for i in range(first, first + groupSize):
+                if i not in count:
+                    return False
+                count[i] -= 1
+                if count[i] == 0:
+                    if i != minH[0]:
+                        return False
+                    heapq.heappop(minH)
+        return True
+
+The idea:
+first create a dictionary where the keys are te unique values of te hand and 
+the values are hte counts
+
+next turn the keys into a min heap
+now while the heap is not empty:
+
+  take the smallest value of the heap as the start:
+  try iterating by 1 for groupSize times to find numbers that are consequtive 
+    if you can't find it in the heap, obviously impossible and return False
+
+    reduce the count in the dictionary by 1
+    if you have run out of counts; aka count is 0:
+    if the value is not the first value in theheap, it's not possible
+
+    remove the first value from the heap
+if you reach te end of the loop return True
